@@ -14,9 +14,10 @@ import model.User;
 import model.Waybill;
 
 public class WaybillView implements CommonView  {
-
 	private static WaybillView view = new WaybillView();
-	
+
+	// waybillInfo() 메소드 정의
+	// 매개변수로 Waybill과 Parcel을 받는다.
 	public void waybillInfo(Waybill wb, Parcel parcel) {
 			UserDao uDao = new UserDao();
 			NonuserDao nuDao = new NonuserDao();
@@ -29,12 +30,12 @@ public class WaybillView implements CommonView  {
 			Nonuser Nuser = nuDao.selectById(wb.getNonCp());
 
 			// 들어가야 하는것
-			// 받는사람 이름 번호 주소
-			String Rname = wb.getRcvrName();
-			String Rcp = wb.getRcvrCp();
-			String Raddr = wb.getRcvrAddr();
-			String RDetailAddr = wb.getRcvrDetailAddr();
-			int Rzipcode = getZipCode(Raddr);
+			// 받는 사람에 관한 정보
+			String Rname = wb.getRcvrName();  // 이름
+			String Rcp = wb.getRcvrCp();  // 전화번호
+			String Raddr = wb.getRcvrAddr();  // 주소
+			String RDetailAddr = wb.getRcvrDetailAddr();  // 상세주소
+			int Rzipcode = getZipCode(Raddr);  // 우편번호
 			
 			//보내는 사람 이름 번호 주소
 			String Sname;
@@ -63,8 +64,9 @@ public class WaybillView implements CommonView  {
 				System.out.println("오류 입니다. 다시 시도하여 주십시오");
 				return;
 			}
-			
-			int Szipcode = getZipCode(Saddr);
+
+			// 보내는 사람의 우편번호
+			int Szipcode = getZipCode(Saddr);  // 보내는 사람의 주소로부터 우편번호를 생성
 
 			// 택배 중량 크기 내용물
 			String pSize = parcel.getParcelSize();
@@ -119,6 +121,8 @@ public class WaybillView implements CommonView  {
 			}
 	}
 
+	// wbList() 메소드 선언
+	// 송장의 리스트를 출력하는 메소드
 	public void wbList() {
 
 		while (true) {
@@ -142,7 +146,8 @@ public class WaybillView implements CommonView  {
 				
 				// 운송장이 회원으로 접수 되었을때
 				if (wb.getUserId() != null) {
-					// 해당 택배를 접수했을때 아이디와 비밀번호를 입력 후 같을 경우 택배 재출력 및 접수 취소를 시킨다.
+					// 해당 택배를 접수했을 때 아이디와 비밀번호가 정확한지 확인하여
+					// 로그인에 성공한 경우 택배 재출력 및 접수 취소를 시킨다.
 					System.out.println();
 					System.out.println("-----------------------------------------------------");
 					System.out.println();
@@ -150,6 +155,7 @@ public class WaybillView implements CommonView  {
 					System.out.println();
 					String userId = userV.Login();
 
+					// 입력한 아이디가 해당 송장을 보낸 사람의 아이디와 일치할 경우
 					if (userId.equals(wb.getUserId()) ) {
 
 						System.out.println("-----------------------------------------------------");
@@ -161,11 +167,12 @@ public class WaybillView implements CommonView  {
 						System.out.print(" 메뉴 선택 : ");
 						String menuNum = scan.nextLine();
 
+						// 1을 선택할 경우 wb와 pc를 매개변수로 받는 송장을 출력한다.
 						if ("1".equals(menuNum)) {
 							waybillInfo(wb,pc);
 							break;
 						} else {
-							wbDao.delete(wbNum);
+							wbDao.delete(wbNum);  // 1을 선택하지 않았을 경우 wbNum을 wbDao에서 지운다.
 							
 							System.out.println("-----------------------------------------------------");
 							System.out.println();
@@ -174,6 +181,7 @@ public class WaybillView implements CommonView  {
 							System.out.println("-----------------------------------------------------");
 							break;
 						}
+					// 아이디가 불일치할 경우
 					} else if (userId != "fail") {
 						System.out.println("-----------------------------------------------------");
 						System.out.println();
@@ -181,7 +189,7 @@ public class WaybillView implements CommonView  {
 						System.out.println();
 						System.out.println("-----------------------------------------------------");
 						break;
-					} else {
+					} else {  // 비밀번호가 불일치할 경우
 						System.out.println("-----------------------------------------------------");
 						System.out.println();
 						System.out.println("               아이디 패스워드가 틀립니다.");

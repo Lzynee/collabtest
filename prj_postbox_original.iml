@@ -18,4 +18,7 @@
     </orderEntry>
     <orderEntry type="library" name="mariadb-java-client-3.1.4" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="442b971a-69e1-409b-814f-8ee4dbb228be" />
+  </component>
 </module>

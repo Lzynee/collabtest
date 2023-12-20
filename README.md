@@ -14,4 +14,6 @@ pull request 생성 조건을 위해 develop 브랜치 생성합니다.
 main에서 develop합니다.
 
 === dec 20 sync 테스트
-develop 변경사항 생성합니다.
+upstream:develop에서 변경사항 생성 후 origin:develop에서 sync 합니다.
+=== upstream pr 테스트
+origin:develop에서 변경사항 생성 후 pr 엽니다.
